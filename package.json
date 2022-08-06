@@ -14,7 +14,6 @@
   "engines": {
     "node": ">=14.17.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
@@ -23,7 +22,6 @@
     "electron-builder": "^23.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sass": "^1.53.0",
     "typescript": "^4.7.4",
     "vite": "^3.0.2",
     "vite-plugin-electron": "^0.8.3"
@@ -31,5 +29,12 @@
   "env": {
     "VITE_DEV_SERVER_HOST": "127.0.0.1",
     "VITE_DEV_SERVER_PORT": 7777
+  },
+  "dependencies": {
+    "rehype-react": "^7.1.1",
+    "rehype-stringify": "^9.0.3",
+    "remark": "^14.0.2",
+    "remark-gfm": "^3.0.1",
+    "remark-rehype": "^10.1.0"
   }
 }

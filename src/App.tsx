@@ -1,70 +1,37 @@
-import { useState } from 'react'
-import electron from '/electron.png'
-import react from '/react.svg'
-import vite from '/vite.svg'
-import styles from 'styles/app.module.scss'
+import React, { createElement, Fragment, ReactElement, useEffect, useState } from 'react'
+import { remark } from 'remark'
+import rehypeStringify from 'rehype-stringify'
+import remarkGfm from 'remark-gfm'
+import remarkRehype from 'remark-rehype'
+import rehypeReact from 'rehype-react'
 
 const App: React.FC = () => {
   const [count, setCount] = useState(0)
+  const [text, setText] = useState<ReactElement>(<></>)
+
+  useEffect(() => {
+    tfMarkdown();
+  }, [])
+
+  const tfMarkdown = () => {
+    return remark().use(remarkGfm).use(remarkRehype).use(rehypeStringify).use(rehypeReact, { createElement, Fragment}).process("## 👀 Overview").then((value) => {
+      setText(value.result)
+    }).catch(err => <></>)
+  }
 
   return (
-    <div className={styles.app}>
-      <header className={styles.appHeader}>
-        <div className={styles.logos}>
-          <div className={styles.imgBox}>
-            <img
-              src={electron}
-              style={{ height: '24vw' }}
-              className={styles.appLogo}
-              alt="electron"
-            />
-          </div>
-          <div className={styles.imgBox}>
-            <img src={vite} style={{ height: '19vw' }} alt="vite" />
-          </div>
-          <div className={styles.imgBox}>
-            <img
-              src={react}
-              style={{ maxWidth: '100%' }}
-              className={styles.appLogo}
-              alt="logo"
-            />
-          </div>
-        </div>
+    <div>
+      <header>
         <p>Hello Electron + Vite + React!</p>
         <p>
           <button onClick={() => setCount((count) => count + 1)}>
             count is: {count}
           </button>
         </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <div>
-          <a
-            className={styles.appLink}
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className={styles.appLink}
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-          <div className={styles.staticPublic}>
-            Place static files into the{' '}
-            <code>/public</code> folder
-            <img style={{ width: 77 }} src="./node.png" />
-          </div>
-        </div>
       </header>
+      <div>
+        {text}
+      </div>
     </div>
   )
 }
